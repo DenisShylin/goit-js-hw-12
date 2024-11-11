@@ -1,35 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/goit-js-hw-12/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
+    <title>Image Search</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css"
+    />
+    <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-CzqEfwIO.js">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-AL2zCFOW.css">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-Bin_dQaj.css">
   </head>
   <body>
     <header class="header">
-  <div class="container">
-    <nav class="nav">
-      <a class="nav-logo" href="./index.html" aria-label="Site logo">
-        <svg class="nav-logo-icon" width="100" height="30">
-          <use href="/goit-js-hw-12/assets/sprite-E8vg0sBb.svg#logo"></use>
-        </svg>
-      </a>
-      <ul class="nav-list">
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-act}" href="./page-2.html">Page 2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-curr}" href="./page-3.html">Page 3</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header>
+      <form class="search-form">
+        <input
+          type="text"
+          name="searchQuery"
+          placeholder="Search images..."
+          required
+          autocomplete="off"
+        />
+        <button type="submit">Search</button>
+      </form>
+    </header>
 
+    <main>
+      <div class="gallery-container">
+        <ul class="gallery"></ul>
 
-    <main></main>
+        <div class="loader">
+          <span class="loader-text">Loading images, please wait...</span>
+        </div>
 
-    <!-- <script type="module" src="./main.js"></script> -->
+        <button type="button" class="load-more">Load more</button>
+
+        <p class="end-message">
+          We're sorry, but you've reached the end of search results.
+        </p>
+      </div>
+    </main>
+
   </body>
 </html>

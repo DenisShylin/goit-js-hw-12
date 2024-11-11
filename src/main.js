@@ -1,3 +1,5 @@
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { searchImages } from './js/pixabay-api.js';
@@ -28,7 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const searchQuery = e.target.elements.searchQuery.value.trim();
 
-    if (!searchQuery) return;
+    // resetGallery();
+
+    if (!searchQuery) {
+      iziToast.error({
+        title: 'Error',
+        message: 'Please enter a search query.',
+        position: 'topRight',
+        timeout: 3000,
+      });
+      resetGallery();
+      return;
+    }
 
     currentQuery = searchQuery;
     currentPage = 1;
@@ -44,9 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
       currentImages = data.hits.length;
 
       if (data.hits.length === 0) {
-        alert(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
+        iziToast.warning({
+          title: 'No Results',
+          message:
+            'Sorry, there are no images matching your search query. Please try again.',
+          position: 'topRight',
+          timeout: 3000,
+        });
+        resetGallery();
         return;
       }
 
@@ -60,7 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (error) {
       console.error('Error fetching images:', error);
-      alert('An error occurred while fetching images. Please try again.');
+      iziToast.error({
+        title: 'Error',
+        message: 'An error occurred while fetching images. Please try again.',
+        position: 'topRight',
+        timeout: 3000,
+      });
+      resetGallery();
     } finally {
       showLoader(false);
     }
@@ -94,9 +118,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (error) {
       console.error('Error fetching more images:', error);
-      alert('An error occurred while fetching more images. Please try again.');
+      iziToast.error({
+        title: 'Error',
+        message:
+          'An error occurred while fetching more images. Please try again.',
+        position: 'topRight',
+        timeout: 3000,
+      });
+      resetGallery();
     } finally {
       showLoader(false);
     }
   });
 });
+
+function resetGallery() {
+  currentQuery = '';
+  gallery.innerHTML = '';
+}

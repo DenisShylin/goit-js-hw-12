@@ -31,25 +31,29 @@ export function renderGallery(images, container, append = false) {
   }
 }
 
-export function toggleLoadMoreButton(show, totalHits, currentImages) {
+export function toggleLoadMoreButton(show) {
   const loadMoreBtn = document.querySelector('.load-more');
   if (!loadMoreBtn) return;
-
-  if (show && currentImages < totalHits) {
-    loadMoreBtn.style.display = 'block';
-  } else {
-    loadMoreBtn.style.display = 'none';
-  }
+  loadMoreBtn.style.display = show ? 'block' : 'none';
 }
 
 export function showLoader(show) {
   const loader = document.querySelector('.loader');
-  loader.style.display = show ? 'block' : 'none';
+  if (show) {
+    loader.classList.add('active');
+  } else {
+    loader.classList.remove('active');
+  }
 }
 
-export function showEndMessage(show) {
-  const message = document.querySelector('.end-message');
-  if (message) {
-    message.style.display = show ? 'block' : 'none';
+export function showToastMessage(show) {
+  const toast = document.querySelector('.toast-message');
+  if (show) {
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  } else {
+    toast.classList.remove('show');
   }
 }

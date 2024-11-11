@@ -5,7 +5,7 @@ import {
   renderGallery,
   toggleLoadMoreButton,
   showLoader,
-  showEndMessage,
+  showToastMessage,
 } from './js/render-functions.js';
 
 let currentPage = 1;
@@ -17,21 +17,8 @@ let currentImages = 0;
 document.addEventListener('DOMContentLoaded', () => {
   const searchForm = document.querySelector('.search-form');
   const gallery = document.querySelector('.gallery');
-
-  // Add load more button and end message to HTML
-  document.body.insertAdjacentHTML(
-    'beforeend',
-    `
-    <button type="button" class="load-more" style="display: none;">Load more</button>
-    <p class="end-message" style="display: none; text-align: center;">
-      We're sorry, but you've reached the end of search results.
-    </p>
-    `
-  );
-
   const loadMoreBtn = document.querySelector('.load-more');
 
-  // Initialize SimpleLightbox
   lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
@@ -50,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       showLoader(true);
       toggleLoadMoreButton(false);
-      showEndMessage(false);
+      showToastMessage(false);
 
       const data = await searchImages(searchQuery, currentPage);
       totalHits = data.totalHits;
@@ -66,10 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
       renderGallery(data.hits, gallery);
       lightbox.refresh();
 
-      toggleLoadMoreButton(true, totalHits, currentImages);
-
       if (currentImages >= totalHits) {
-        showEndMessage(true);
+        showToastMessage(true);
+      } else {
+        toggleLoadMoreButton(true);
       }
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -92,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
       renderGallery(data.hits, gallery, true);
       lightbox.refresh();
 
-      // Smooth scrolling
       const { height: cardHeight } =
         gallery.firstElementChild.getBoundingClientRect();
 
@@ -101,10 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
         behavior: 'smooth',
       });
 
-      toggleLoadMoreButton(true, totalHits, currentImages);
-
       if (currentImages >= totalHits) {
-        showEndMessage(true);
+        showToastMessage(true);
+      } else {
+        toggleLoadMoreButton(true);
       }
     } catch (error) {
       console.error('Error fetching more images:', error);

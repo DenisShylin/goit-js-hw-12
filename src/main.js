@@ -15,10 +15,10 @@ let currentQuery = '';
 let lightbox = null;
 let totalHits = 0;
 let currentImages = 0;
+const gallery = document.querySelector('.gallery');
 
 document.addEventListener('DOMContentLoaded', () => {
   const searchForm = document.querySelector('.search-form');
-  const gallery = document.querySelector('.gallery');
   const loadMoreBtn = document.querySelector('.load-more');
 
   lightbox = new SimpleLightbox('.gallery a', {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const searchQuery = e.target.elements.searchQuery.value.trim();
 
-    // resetGallery();
+    resetGallery();
 
     if (!searchQuery) {
       iziToast.error({
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         position: 'topRight',
         timeout: 3000,
       });
-      resetGallery();
       return;
     }
 
@@ -64,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
           position: 'topRight',
           timeout: 3000,
         });
-        resetGallery();
         return;
       }
 
@@ -84,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
         position: 'topRight',
         timeout: 3000,
       });
-      resetGallery();
     } finally {
       showLoader(false);
     }
